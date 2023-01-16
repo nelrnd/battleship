@@ -1,3 +1,5 @@
+import { Ship } from './Ship.js';
+
 export class Board {
   constructor(size) {
     this.grid = this.createGrid(size);
@@ -60,6 +62,7 @@ export class Board {
 
     ship.place(pos, dir);
     squares.forEach((square) => (square.ship = ship));
+    if (!this.ships.includes(ship)) this.ships.push(ship);
   }
 
   removeShip(ship) {
@@ -96,6 +99,30 @@ export class Board {
 
   checkAttackValidity(x, y) {
     return !this.findAttack(x, y) && !!this.getSquare(x, y);
+  }
+
+  populateRandomly() {
+    this.ships.length = 0;
+    const shipLengths = [5, 4, 3, 3, 2];
+    const gridSize = Math.sqrt(this.grid.length);
+
+    for (let i = 0; i < shipLengths.length; i++) {
+      const ship = new Ship(shipLengths[i]);
+      let placed = false;
+
+      while (!placed) {
+        let x = Math.floor(Math.random() * gridSize);
+        let y = Math.floor(Math.random() * gridSize);
+        const pos = { x, y };
+        const dir = Math.floor(Math.random() * 2) === 0 ? 'hor' : 'ver';
+
+        const squares = this.getSquares(pos, dir, ship.length);
+        if (this.checkSquaresValidity(squares, ship.length)) {
+          this.placeShip(ship, pos, dir);
+          placed = true;
+        }
+      }
+    }
   }
 }
 

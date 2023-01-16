@@ -74,6 +74,7 @@ test('Placing an already placed ship to a new location', () => {
   board.placeShip(ship, { x: 3, y: 1 }, 'ver');
   expect(board.getSquare(4, 2).ship).toBe(null);
   expect(board.getSquare(3, 3).ship).toBe(ship);
+  expect(board.ships.length).toBe(1);
 });
 
 test('Try placing ship on top of another', () => {
@@ -175,4 +176,19 @@ test('Checking if already attacked attack location is valid', () => {
   const board = new Board();
   board.receiveAttack(3, 5);
   expect(board.checkAttackValidity(3, 5)).toBe(false);
+});
+
+test('Populating board with ships randomly', () => {
+  const board = new Board();
+  board.populateRandomly();
+  expect(board.ships.length).toBe(5);
+  expect(board.ships.every((ship) => ship.isPlaced));
+});
+
+test('Populating board with ships randomly when there is already ships', () => {
+  const board = new Board();
+  board.populateRandomly();
+  board.populateRandomly();
+  expect(board.ships.length).toBe(5);
+  expect(board.ships.every((ship) => ship.isPlaced));
 });
