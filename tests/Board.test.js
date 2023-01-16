@@ -192,3 +192,44 @@ test('Populating board with ships randomly when there is already ships', () => {
   expect(board.ships.length).toBe(5);
   expect(board.ships.every((ship) => ship.isPlaced));
 });
+
+test('Checking if all ships are placed on board when no ship is placed', () => {
+  const board = new Board();
+  expect(board.allShipsPlaced).toBe(false);
+});
+
+test('Checking if all ships are placed after populating board randomly', () => {
+  const board = new Board();
+  board.populateRandomly();
+  expect(board.allShipsPlaced).toBe(true);
+});
+
+test('Checking if all ships are sunk when there is no ship', () => {
+  const board = new Board();
+  expect(board.allShipsSunked).toBe(false);
+});
+
+test('Checking if all ships are sunk when no ship is sunk', () => {
+  const board = new Board();
+  board.populateRandomly();
+  expect(board.allShipsSunked).toBe(false);
+});
+
+test('Checking if all ships are sunk when all ships are sunk', () => {
+  const board = new Board();
+  board.populateRandomly();
+
+  for (let i = 0; i < 100; i++) {
+    let played = false;
+    while (!played) {
+      let x = Math.floor(Math.random() * 10);
+      let y = Math.floor(Math.random() * 10);
+      if (board.checkAttackValidity(x, y)) {
+        board.receiveAttack(x, y);
+        played = true;
+      }
+    }
+  }
+
+  expect(board.allShipsSunked).toBe(true);
+});
