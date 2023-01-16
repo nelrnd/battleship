@@ -1,3 +1,32 @@
-h1 {
-  text-transform: uppercase;
+:root {
+  --grid-size: 10;
+  --grid-dim: 750px;
+  --square-dim: calc(var(--grid-dim) / var(--grid-size));
+}
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 2rem;
+}
+
+.grid {
+  width: var(--grid-dim);
+  height: var(--grid-dim);
+  outline: 0.5px solid black;
+
+  display: grid;
+  grid-template-columns: repeat(var(--grid-size), auto);
+  grid-template-rows: repeat(var(--grid-size), auto);
+}
+
+.square {
+  width: var(--square-dim);
+  height: var(--square-dim);
+  border: solid 0.5px black;
 }
