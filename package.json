@@ -2,7 +2,7 @@
   "name": "battleship",
   "version": "1.0.0",
   "description": "A battleship game you can play on the web",
-  "main": "index.js",
+  "main": "script.js",
   "scripts": {
     "test": "jest"
   },
