@@ -124,14 +124,14 @@ test('Try rotating a ship on top of another', () => {
   expect(() => board.rotateShip(ship1)).toThrow('Invalid ship placement');
 });
 
-test('Attack board', () => {
+test('Attacking board', () => {
   const board = new Board();
   board.receiveAttack(3, 5);
   expect(board.receivedAttacks.length).toBe(1);
   expect(board.getSquare(3, 5).shot).toBe(true);
 });
 
-test('Attack board, hitting a ship', () => {
+test('Attacking board, hitting a ship', () => {
   const board = new Board();
   const ship = new Ship();
   board.placeShip(ship, { x: 3, y: 2 }, 'hor');
@@ -139,7 +139,7 @@ test('Attack board, hitting a ship', () => {
   expect(ship.hits).toBe(1);
 });
 
-test('Attack board multiple times, sunking a ship', () => {
+test('Attacking board multiple times, sunking a ship', () => {
   const board = new Board();
   const ship = new Ship();
   board.placeShip(ship, { x: 3, y: 2 }, 'hor');
@@ -159,4 +159,20 @@ test('Try attacking board at already attacked location', () => {
   const board = new Board();
   board.receiveAttack(3, 2);
   expect(() => board.receiveAttack(3, 2)).toThrow('Location already attacked');
+});
+
+test('Checking if attack location is valid', () => {
+  const board = new Board();
+  expect(board.checkAttackValidity(3, 5)).toBe(true);
+});
+
+test('Checking if invalid attack location is valid', () => {
+  const board = new Board();
+  expect(board.checkAttackValidity(-3, 12)).toBe(false);
+});
+
+test('Checking if already attacked attack location is valid', () => {
+  const board = new Board();
+  board.receiveAttack(3, 5);
+  expect(board.checkAttackValidity(3, 5)).toBe(false);
 });

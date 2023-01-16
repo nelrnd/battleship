@@ -93,6 +93,10 @@ export class Board {
     );
     return attack;
   }
+
+  checkAttackValidity(x, y) {
+    return !this.findAttack(x, y) && !!this.getSquare(x, y);
+  }
 }
 
 // Grid square
