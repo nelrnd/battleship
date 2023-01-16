@@ -1,0 +1,24 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "A battleship game you can play on the web",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nelrnd/battleship.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nelrnd/battleship/issues"
+  },
+  "homepage": "https://github.com/nelrnd/battleship#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "jest": "^29.3.1"
+  }
+}
