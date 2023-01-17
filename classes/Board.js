@@ -86,7 +86,7 @@ export class Board {
     const attack = { x, y };
 
     square.shot = true;
-    this.receivedAttacks.push(attack);
+    this.receivedAttacks.unshift(attack);
 
     const ship = square.ship;
 

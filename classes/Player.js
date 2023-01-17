@@ -34,7 +34,11 @@ export class Player {
     const hitNotSunkAttack = this.findHitNotSunkAttack(board);
 
     if (hitNotSunkAttack) {
-      // it means next attack should be located nearby
+      const nearbyValidAttack = this.findNearbyValidAttack(
+        hitNotSunkAttack,
+        board
+      );
+      this.play(nearbyValidAttack, board);
     } else {
       this.playRandom(board);
     }
@@ -62,6 +66,7 @@ export class Player {
 
     for (let i = 0; i < sides.length; i++) {
       const [x, y] = [sides[i].x, sides[i].y];
+
       const attackIsValid = board.checkAttackValidity(x, y);
       if (attackIsValid) {
         nearbyValidAttack = sides[i];
@@ -70,5 +75,29 @@ export class Player {
     }
 
     return nearbyValidAttack;
+  }
+
+  findAdjacentHitAttack(attack, board) {
+    const [x, y] = [attack.x, attack.y];
+    // searching from top, right, bottom, left of attack
+    const top = { x, y: y - 1 };
+    const right = { x: x + 1, y };
+    const bottom = { x, y: y + 1 };
+    const left = { x: x - 1, y };
+    const sides = [top, right, bottom, left];
+
+    let adjacentHitAttack = undefined;
+
+    for (let i = 0; i < sides.length; i++) {
+      const [x, y] = [sides[i].x, sides[i].y];
+
+      const adjacentExist = board.findAttack(x, y);
+      if (adjacentExist) {
+        adjacentHitAttack = sides[i];
+        break;
+      }
+    }
+
+    return adjacentHitAttack;
   }
 }

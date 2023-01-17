@@ -84,3 +84,20 @@ test('Try finding valid nearby attack when there is none', () => {
     undefined
   );
 });
+
+test('Finding adjacent hit attack', () => {
+  const player = new Player('human');
+  const opponent = new Player('computer');
+  opponent.board.placeShip(new Ship(3), { x: 2, y: 2 }, 'hor');
+  player.play({ x: 2, y: 2 }, opponent.board);
+  const adjAtck = player.findAdjacentHitAttack({ x: 3, y: 2 }, opponent.board);
+  expect(adjAtck).toEqual({ x: 2, y: 2 });
+});
+
+test('Try finding adjacent hit attack when there is none', () => {
+  const player = new Player('human');
+  const opponent = new Player('computer');
+  opponent.board.placeShip(new Ship(3), { x: 2, y: 2 }, 'hor');
+  const adjAtck = player.findAdjacentHitAttack({ x: 3, y: 2 }, opponent.board);
+  expect(adjAtck).toBe(undefined);
+});

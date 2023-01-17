@@ -66,7 +66,7 @@ function playTurn() {
   } else {
     makeBoardUnplayable(current.board);
     setTimeout(() => {
-      current.playRandom(opponent.board);
+      current.playSmart(opponent.board);
     }, 1000);
   }
 }
