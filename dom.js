@@ -9,7 +9,7 @@ function displayBoard(board) {
 
   // position ships elems
   board.ships.forEach((ship) => {
-    positionShipElem(ship, board);
+    positionElem(ship.elem, ship.pos.x, ship.pos.y, board);
   });
 }
 
@@ -80,14 +80,19 @@ function createShipElem(ship) {
   return shipElem;
 }
 
-function positionShipElem(ship, board) {
+function getPositionFromXY(x, y, board) {
   const gridWidth = board.elem.offsetWidth;
   const gridSize = Math.sqrt(board.grid.length);
-  const posX = ((gridWidth / gridSize) * ship.pos.x * 100) / gridWidth;
-  const posY = ((gridWidth / gridSize) * ship.pos.y * 100) / gridWidth;
+  const posX = ((gridWidth / gridSize) * x * 100) / gridWidth + '%';
+  const posY = ((gridWidth / gridSize) * y * 100) / gridWidth + '%';
 
-  ship.elem.style.left = posX + '%';
-  ship.elem.style.top = posY + '%';
+  return { x: posX, y: posY };
+}
+
+function positionElem(elem, x, y, board) {
+  const pos = getPositionFromXY(x, y, board);
+  elem.style.left = pos.x;
+  elem.style.top = pos.y;
 }
 
 function getGridCoordinates(event, board) {
@@ -109,4 +114,33 @@ function makeBoardPlayable(board) {
   });
 }
 
-export { createBoardElem, displayBoard, makeBoardPlayable };
+function drawAttack(attack, board) {
+  const square = board.getSquare(attack.x, attack.y);
+  const hit = square.hasShip;
+
+  const markElem = createMarkElem(hit);
+  board.elem.querySelector('.attacks').appendChild(markElem);
+  positionElem(markElem, attack.x, attack.y, board);
+}
+
+function createMarkElem(hit) {
+  const markElem = document.createElement('div');
+  const bar1 = document.createElement('div');
+  const bar2 = document.createElement('div');
+
+  markElem.className = 'mark';
+  bar1.className = 'bar bar-1';
+  bar2.className = 'bar bar-2';
+
+  markElem.appendChild(bar1);
+  markElem.appendChild(bar2);
+
+  if (hit) {
+    markElem.classList.add('hit');
+  }
+
+  return markElem;
+}
+
+// drawAttack temp export
+export { createBoardElem, displayBoard, makeBoardPlayable, drawAttack };

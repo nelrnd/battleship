@@ -1,7 +1,12 @@
 /* MAIN GAME VARIABLES AND FUNCTIONS */
 
 import { Player } from './classes/Player.js';
-import { createBoardElem, displayBoard, makeBoardPlayable } from './dom.js';
+import {
+  createBoardElem,
+  displayBoard,
+  drawAttack,
+  makeBoardPlayable,
+} from './dom.js';
 
 const players = [];
 let turn = 0;
@@ -39,6 +44,9 @@ function startGame() {
   });
 
   makeBoardPlayable(players[0].board);
+
+  // TEMP
+  drawAttack({ x: 3, y: 6 }, players[0].board);
 }
 
 export { switchTurn, createPlayers, setupGame, startGame };

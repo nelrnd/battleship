@@ -57,13 +57,15 @@ main {
   border: solid 0.5px black;
 }
 
-.ships {
+.ships,
+.attacks {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
+
 .ship {
   position: absolute;
   outline: 0.5px solid black;
@@ -80,5 +82,37 @@ main {
   flex-direction: row;
 }
 .ship .square {
-  background-color: blue;
+  background-color: rgb(60, 60, 202);
+}
+
+.attacks {
+  z-index: 5;
+}
+
+.mark {
+  width: var(--square-dim);
+  height: var(--square-dim);
+  position: relative;
+}
+
+.mark .bar {
+  border-radius: 4px;
+  background-color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.mark.hit .bar {
+  background-color: #ff1d1d;
+}
+
+.mark .bar-1 {
+  width: 15%;
+  height: 80%;
+}
+.mark .bar-2 {
+  width: 80%;
+  height: 15%;
 }
