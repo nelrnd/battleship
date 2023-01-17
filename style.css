@@ -119,3 +119,11 @@ main {
   width: 70%;
   height: 12%;
 }
+
+.board.opponent .ship {
+  visibility: hidden;
+}
+
+.board.opponent .ship.sunk {
+  visibility: visible;
+}

@@ -36,6 +36,9 @@ function setupGame() {
   players.forEach((player) => {
     player.board.populateRandomly();
     createBoardElem(player.board);
+    if (player.type === 'computer') {
+      player.board.elem.classList.add('opponent');
+    }
   });
 }
 
