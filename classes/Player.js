@@ -1,4 +1,5 @@
 import { Board } from './Board.js';
+import { switchTurn } from '../game.js';
 
 export class Player {
   constructor(type) {
@@ -9,6 +10,7 @@ export class Player {
   play(pos, board) {
     if (board.checkAttackValidity(pos.x, pos.y)) {
       board.receiveAttack(pos.x, pos.y);
+      switchTurn();
     }
   }
 
@@ -23,6 +25,7 @@ export class Player {
       if (board.checkAttackValidity(x, y)) {
         board.receiveAttack(x, y);
         played = true;
+        switchTurn();
       }
     }
   }

@@ -11,14 +11,34 @@
   box-sizing: border-box;
 }
 
+html,
 body {
+  height: 100%;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+header {
+  text-align: center;
   padding: 2rem;
+  background-color: #eee;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 
 .board {
   width: var(--grid-dim);
   height: var(--grid-dim);
   position: relative;
+  margin: 2rem;
 }
 
 .grid {

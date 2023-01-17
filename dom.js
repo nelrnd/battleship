@@ -1,5 +1,20 @@
+const main = document.querySelector('main');
+
 function displayElem(elem) {
-  document.body.appendChild(elem);
+  main.appendChild(elem);
+}
+
+function displayBoard(board) {
+  displayElem(board.elem);
+
+  // position ships elems
+  board.ships.forEach((ship) => {
+    positionShipElem(ship, board);
+  });
+}
+
+function clearMain() {
+  main.innerHTML = null;
 }
 
 function createBoardElem(board) {
@@ -24,6 +39,7 @@ function createBoardGridElem(grid) {
   grid.forEach((square) => {
     const squareElem = document.createElement('div');
     squareElem.className = 'square';
+    square.elem = squareElem;
     gridElem.appendChild(squareElem);
   });
 
@@ -64,14 +80,33 @@ function createShipElem(ship) {
   return shipElem;
 }
 
-function positionShipElem(ship, shipElem, board) {
+function positionShipElem(ship, board) {
   const gridWidth = board.elem.offsetWidth;
   const gridSize = Math.sqrt(board.grid.length);
   const posX = ((gridWidth / gridSize) * ship.pos.x * 100) / gridWidth;
   const posY = ((gridWidth / gridSize) * ship.pos.y * 100) / gridWidth;
 
-  shipElem.style.left = posX + '%';
-  shipElem.style.top = posY + '%';
+  ship.elem.style.left = posX + '%';
+  ship.elem.style.top = posY + '%';
 }
 
-export { createBoardElem, displayElem, positionShipElem };
+function getGridCoordinates(event, board) {
+  const rect = board.elem.querySelector('.grid').getBoundingClientRect();
+  const gridSize = Math.sqrt(board.grid.length);
+  const pointerFromLeft = event.clientX - rect.left;
+  const pointerFromTop = event.clientY - rect.top;
+  const x = Math.floor((pointerFromLeft * gridSize) / rect.width);
+  const y = Math.floor((pointerFromTop * gridSize) / rect.height);
+
+  return { x, y };
+}
+
+function makeBoardPlayable(board) {
+  board.elem.addEventListener('mousedown', (event) => {
+    const coords = getGridCoordinates(event, board);
+    console.log(coords);
+    board.getSquare(coords.x, coords.y).elem.style.backgroundColor = 'red';
+  });
+}
+
+export { createBoardElem, displayBoard, makeBoardPlayable };
