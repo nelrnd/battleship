@@ -29,4 +29,46 @@ export class Player {
       }
     }
   }
+
+  playSmart(board) {
+    const hitNotSunkAttack = this.findHitNotSunkAttack(board);
+
+    if (hitNotSunkAttack) {
+      // it means next attack should be located nearby
+    } else {
+      this.playRandom(board);
+    }
+  }
+
+  findHitNotSunkAttack(board) {
+    const attacks = board.receivedAttacks;
+    return attacks.find(
+      (attack) =>
+        board.getSquare(attack.x, attack.y).ship &&
+        board.getSquare(attack.x, attack.y).ship.isSunk === false
+    );
+  }
+
+  findNearbyValidAttack(attack, board) {
+    const [x, y] = [attack.x, attack.y];
+    // searching from top, right, bottom, left of attack
+    const top = { x, y: y - 1 };
+    const right = { x: x + 1, y };
+    const bottom = { x, y: y + 1 };
+    const left = { x: x - 1, y };
+    const sides = [top, right, bottom, left];
+
+    let nearbyValidAttack = undefined;
+
+    for (let i = 0; i < sides.length; i++) {
+      const [x, y] = [sides[i].x, sides[i].y];
+      const attackIsValid = board.checkAttackValidity(x, y);
+      if (attackIsValid) {
+        nearbyValidAttack = sides[i];
+        break;
+      }
+    }
+
+    return nearbyValidAttack;
+  }
 }

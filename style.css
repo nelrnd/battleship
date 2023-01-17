@@ -127,3 +127,6 @@ main {
 .board.opponent .ship.sunk {
   visibility: visible;
 }
+.board.opponent .ship.sunk .square {
+  background-color: rgb(60, 60, 202);
+}
