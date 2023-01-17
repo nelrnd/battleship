@@ -154,6 +154,7 @@ export {
   createBoardElem,
   displayBoard,
   makeBoardPlayable,
+  makeBoardUnplayable,
   drawAttack,
   changeShipColor,
 };

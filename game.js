@@ -4,16 +4,18 @@ import { Player } from './classes/Player.js';
 import {
   createBoardElem,
   displayBoard,
-  drawAttack,
   makeBoardPlayable,
+  makeBoardUnplayable,
 } from './dom.js';
 
 const players = [];
 let turn = 0;
 
 function switchTurn() {
-  turn = Math.abs(turn - 1);
-  playTurn();
+  if (players.length === 2) {
+    turn = Math.abs(turn - 1);
+    playTurn();
+  }
 }
 
 function getCurrent() {
@@ -51,14 +53,26 @@ function playTurn() {
   let current = getCurrent();
   let opponent = getOpponent();
 
+  if (current.board.allShipsSunked) {
+    endGame(opponent);
+    return;
+  }
+
   if (current.type === 'human') {
-    console.log('hey');
     makeBoardPlayable(current, opponent.board);
   } else {
+    makeBoardUnplayable(current.board);
     setTimeout(() => {
       current.playRandom(opponent.board);
     }, 1000);
   }
+}
+
+function endGame(winner) {
+  players.forEach((player) => {
+    makeBoardUnplayable(player.board);
+  });
+  alert(`Game over! Winner is ${winner.type}`);
 }
 
 export { switchTurn, createPlayers, setupGame, startGame };
