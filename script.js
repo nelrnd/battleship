@@ -1,7 +1,7 @@
 /* GAME LOGIC */
 
 import { Player } from './classes/Player.js';
-import { createBoardElem, displayElem } from './dom.js';
+import { createBoardElem, displayElem, positionShipElem } from './dom.js';
 
 const players = [];
 let turn = 0;
@@ -44,3 +44,6 @@ function startGame() {
 setupGame();
 const boardElem = createBoardElem(players[0].board);
 displayElem(boardElem);
+players[0].board.ships.forEach((ship) => {
+  positionShipElem(ship, ship.elem, players[0].board, players[0].board.elem);
+});
