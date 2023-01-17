@@ -106,12 +106,15 @@ function getGridCoordinates(event, board) {
   return { x, y };
 }
 
-function makeBoardPlayable(board) {
-  board.elem.addEventListener('mousedown', (event) => {
+function makeBoardPlayable(currentPlayer, board) {
+  board.elem.onclick = (event) => {
     const coords = getGridCoordinates(event, board);
-    console.log(coords);
-    board.getSquare(coords.x, coords.y).elem.style.backgroundColor = 'red';
-  });
+    currentPlayer.play(coords, board);
+  };
+}
+
+function makeBoardUnplayable(board) {
+  board.elem.onclick = null;
 }
 
 function drawAttack(attack, board) {
@@ -142,5 +145,15 @@ function createMarkElem(hit) {
   return markElem;
 }
 
+function changeShipColor(elem) {
+  elem.classList.add('sunk');
+}
+
 // drawAttack temp export
-export { createBoardElem, displayBoard, makeBoardPlayable, drawAttack };
+export {
+  createBoardElem,
+  displayBoard,
+  makeBoardPlayable,
+  drawAttack,
+  changeShipColor,
+};

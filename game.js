@@ -13,6 +13,7 @@ let turn = 0;
 
 function switchTurn() {
   turn = Math.abs(turn - 1);
+  playTurn();
 }
 
 function getCurrent() {
@@ -43,10 +44,21 @@ function startGame() {
     displayBoard(player.board);
   });
 
-  makeBoardPlayable(players[0].board);
+  playTurn();
+}
 
-  // TEMP
-  drawAttack({ x: 3, y: 6 }, players[0].board);
+function playTurn() {
+  let current = getCurrent();
+  let opponent = getOpponent();
+
+  if (current.type === 'human') {
+    console.log('hey');
+    makeBoardPlayable(current, opponent.board);
+  } else {
+    setTimeout(() => {
+      current.playRandom(opponent.board);
+    }, 1000);
+  }
 }
 
 export { switchTurn, createPlayers, setupGame, startGame };

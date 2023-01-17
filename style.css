@@ -84,6 +84,9 @@ main {
 .ship .square {
   background-color: rgb(60, 60, 202);
 }
+.ship.sunk .square {
+  background-color: black;
+}
 
 .attacks {
   z-index: 5;
@@ -92,7 +95,7 @@ main {
 .mark {
   width: var(--square-dim);
   height: var(--square-dim);
-  position: relative;
+  position: absolute;
 }
 
 .mark .bar {
@@ -109,10 +112,10 @@ main {
 }
 
 .mark .bar-1 {
-  width: 15%;
-  height: 80%;
+  width: 12%;
+  height: 70%;
 }
 .mark .bar-2 {
-  width: 80%;
-  height: 15%;
+  width: 70%;
+  height: 12%;
 }

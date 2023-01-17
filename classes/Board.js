@@ -1,3 +1,4 @@
+import { drawAttack, changeShipColor } from '../dom.js';
 import { Ship } from './Ship.js';
 
 export class Board {
@@ -82,11 +83,23 @@ export class Board {
     if (this.findAttack(x, y)) throw 'Location already attacked';
     if (!square) throw 'Invalid location';
 
-    square.shot = true;
-    this.receivedAttacks.push({ x, y });
+    const attack = { x, y };
 
-    if (square.ship) {
-      square.ship.hit();
+    square.shot = true;
+    this.receivedAttacks.push(attack);
+
+    const ship = square.ship;
+
+    if (ship) {
+      ship.hit();
+    }
+
+    if (this.elem) {
+      drawAttack(attack, this);
+    }
+
+    if (this.elem && ship && ship.isSunk) {
+      changeShipColor(ship.elem);
     }
   }
 
