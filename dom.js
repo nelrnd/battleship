@@ -165,17 +165,16 @@ HANDLING MOVING AND ROTATING SHIPS
 let currentBoard = null;
 let currentShip = null;
 let currentShipSquare = null;
+let hasMoved = false;
 
 function makeShipMoveable(ship) {
   ship.elem.addEventListener('mousedown', dragStart);
   ship.elem.addEventListener('touchstart', dragStart);
-  ship.elem.addEventListener('dblclick', rotate);
 }
 
 function makeShipUnmoveable(ship) {
   ship.elem.removeEventListener('mousedown', dragStart);
   ship.elem.removeEventListener('touchstart', dragStart);
-  ship.elem.removeEventListener('dblclick', rotate);
 }
 
 function getCurrentBoard(event) {
@@ -221,12 +220,22 @@ function getCurrents(event) {
   currentShipSquare = getCurrentShipSquare(event);
 }
 
+function resetCurrents() {
+  currentBoard = null;
+  currentShip = null;
+  currentShipSquare = null;
+  hasMoved = false;
+}
+
 function dragStart(event) {
   event.preventDefault();
   getCurrents(event);
 
   document.addEventListener('mousemove', drag);
   document.addEventListener('touchmove', drag);
+
+  document.addEventListener('mouseup', rotate);
+  document.addEventListener('touchend', rotate);
 
   document.addEventListener('mouseup', dragEnd);
   document.addEventListener('touchend', dragEnd);
@@ -236,39 +245,42 @@ function drag(event) {
   const ship = currentShip;
   const square = currentShipSquare;
   const coords = getGridCoordinates(event, currentBoard);
-  currentShip.dir === 'hor' ? (coords.x -= square) : (coords.y -= square);
+  ship.dir === 'hor' ? (coords.x -= square) : (coords.y -= square);
 
   const squares = currentBoard.getSquares(coords, ship.dir, ship.length);
   if (currentBoard.checkSquaresValidity(squares, ship.length, ship)) {
-    currentBoard.placeShip(currentShip, coords, currentShip.dir);
+    if (ship.pos.x !== coords.x || ship.pos.y !== coords.y) {
+      hasMoved = true;
+    }
+    currentBoard.placeShip(ship, coords, ship.dir);
   }
 }
 
 function dragEnd() {
   document.removeEventListener('mousemove', drag);
   document.removeEventListener('touchmove', drag);
+  document.removeEventListener('mouseup', rotate);
+  document.removeEventListener('touchend', rotate);
   document.removeEventListener('mouseup', dragEnd);
   document.removeEventListener('touchend', dragEnd);
-  currentBoard = null;
-  currentShip = null;
-  currentShipSquare = null;
+  resetCurrents();
 }
 
 function rotate(event) {
-  event.preventDefault();
-  getCurrents(event);
-  currentBoard.rotateShip(currentShip);
-  // update ship elem class
-  if (currentShip.elem.classList.contains('hor')) {
-    currentShip.elem.classList.remove('hor');
-    currentShip.elem.classList.add('ver');
-  } else if (currentShip.elem.classList.contains('ver')) {
-    currentShip.elem.classList.remove('ver');
-    currentShip.elem.classList.add('hor');
+  if (hasMoved === false) {
+    event.preventDefault();
+    getCurrents(event);
+    currentBoard.rotateShip(currentShip);
+    // update ship elem class
+    if (currentShip.elem.classList.contains('hor')) {
+      currentShip.elem.classList.remove('hor');
+      currentShip.elem.classList.add('ver');
+    } else if (currentShip.elem.classList.contains('ver')) {
+      currentShip.elem.classList.remove('ver');
+      currentShip.elem.classList.add('hor');
+    }
+    resetCurrents();
   }
-  currentBoard = null;
-  currentShip = null;
-  currentShipSquare = null;
 }
 
 export {
