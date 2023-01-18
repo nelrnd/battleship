@@ -90,6 +90,7 @@ main {
 
 .attacks {
   z-index: 5;
+  pointer-events: none;
 }
 
 .mark {

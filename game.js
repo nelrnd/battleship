@@ -78,4 +78,4 @@ function endGame(winner) {
   alert(`Game over! Winner is ${winner.type}`);
 }
 
-export { switchTurn, createPlayers, setupGame, startGame };
+export { players, switchTurn, createPlayers, setupGame, startGame };

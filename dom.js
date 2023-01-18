@@ -1,3 +1,5 @@
+import { players } from './game.js';
+
 const main = document.querySelector('main');
 
 function displayElem(elem) {
@@ -21,7 +23,7 @@ function createBoardElem(board) {
   const boardElem = document.createElement('div');
   const gridElem = createBoardGridElem(board.grid);
   const shipsElem = createBoardShipsElem(board.ships);
-  const attacksElem = createBoardAttacksElem(board.receivedAttacks);
+  const attacksElem = createBoardAttacksElem();
 
   boardElem.className = 'board';
   boardElem.appendChild(attacksElem);
@@ -58,7 +60,7 @@ function createBoardShipsElem(ships) {
   return shipsElem;
 }
 
-function createBoardAttacksElem(attacks) {
+function createBoardAttacksElem() {
   const attacksElem = document.createElement('div');
   attacksElem.className = 'attacks';
 
@@ -149,7 +151,66 @@ function changeShipColor(elem) {
   elem.classList.add('sunk');
 }
 
-// drawAttack temp export
+/*
+HANDLING MOVING AND ROTATING SHIPS
+*/
+
+let currentBoard = null;
+let currentShip = null;
+let currentShipSquare = null;
+let hasMoved = false;
+
+function makeShipMoveable(ship) {
+  ship.elem.addEventListener('mousedown', dragStart);
+}
+
+function makeShipUnmoveable(ship) {
+  ship.elem.removeEventListener('mousedown', dragStart);
+}
+
+function getCurrentBoard(event) {
+  let elem = event.target;
+  while (!elem.classList.contains('board')) {
+    elem = elem.parentNode;
+  }
+  return players.find((player) => player.board.elem === elem).board;
+}
+
+function getCurrentShip(event) {
+  let elem = event.target;
+  while (!elem.classList.contains('ship')) {
+    elem = elem.parentNode;
+  }
+  return currentBoard.ships.find((ship) => ship.elem === elem);
+}
+
+function getCurrentShipSquare(event) {
+  const ship = currentShip;
+  const rect = ship.elem.getBoundingClientRect();
+  const pointerFromLeft = event.clientX - rect.left;
+  const pointerFromTop = event.clientY - rect.top;
+  if (ship.dir === 'hor') {
+    const square = Math.floor((pointerFromLeft * ship.length) / rect.width);
+    return square;
+  } else if (ship.dir === 'ver') {
+    const square = Math.floor((pointerFromTop * ship.length) / rect.height);
+    return square;
+  }
+}
+
+function getCurrents(event) {
+  currentBoard = getCurrentBoard(event);
+  currentShip = getCurrentShip(event);
+  currentShipSquare = getCurrentShipSquare(event);
+}
+
+function dragStart(event) {
+  getCurrents(event);
+
+  document.addEventListener('mousemove', drag);
+  document.addEventListener('mouseup', dragEnd);
+}
+
 export {
   createBoardElem,
   displayBoard,

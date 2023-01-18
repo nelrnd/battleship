@@ -140,3 +140,14 @@ test('Checking if an attack is surrounded when it not', () => {
     false
   );
 });
+
+test('Checking if an attack in corner is surrounded when it is', () => {
+  const player = new Player('human');
+  const opponent = new Player('computer');
+  player.play({ x: 0, y: 0 }, opponent.board);
+  player.play({ x: 1, y: 1 }, opponent.board);
+  player.play({ x: 0, y: 2 }, opponent.board);
+  expect(player.checkIfAttackSurrounded({ x: 0, y: 1 }, opponent.board)).toBe(
+    true
+  );
+});
