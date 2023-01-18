@@ -155,17 +155,18 @@ function changeShipColor(elem) {
 HANDLING MOVING AND ROTATING SHIPS
 */
 
-const gridCoords = { prevX: null, prevY: null, newX: null, newY: null };
 let currentBoard = null;
 let currentShip = null;
 let currentShipSquare = null;
 
 function makeShipMoveable(ship) {
   ship.elem.addEventListener('mousedown', dragStart);
+  ship.elem.addEventListener('dblclick', rotate);
 }
 
 function makeShipUnmoveable(ship) {
   ship.elem.removeEventListener('mousedown', dragStart);
+  ship.elem.removeEventListener('dblclick', rotate);
 }
 
 function getCurrentBoard(event) {
@@ -205,6 +206,7 @@ function getCurrents(event) {
 }
 
 function dragStart(event) {
+  event.preventDefault();
   getCurrents(event);
 
   document.addEventListener('mousemove', drag);
@@ -212,6 +214,7 @@ function dragStart(event) {
 }
 
 function drag(event) {
+  event.preventDefault();
   const ship = currentShip;
   const square = currentShipSquare;
   const coords = getGridCoordinates(event, currentBoard);
@@ -229,6 +232,20 @@ function dragEnd() {
   currentBoard = null;
   currentShip = null;
   currentShipSquare = null;
+}
+
+function rotate(event) {
+  event.preventDefault();
+  getCurrents(event);
+  currentBoard.rotateShip(currentShip);
+  // update ship elem class
+  if (currentShip.elem.classList.contains('hor')) {
+    currentShip.elem.classList.remove('hor');
+    currentShip.elem.classList.add('ver');
+  } else if (currentShip.elem.classList.contains('ver')) {
+    currentShip.elem.classList.remove('ver');
+    currentShip.elem.classList.add('hor');
+  }
 }
 
 export {
