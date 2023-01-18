@@ -162,4 +162,30 @@ export class Player {
       return undefined;
     }
   }
+
+  // check if attacks coords are surrounded by attacks,
+  // in which case attack is necessarily a miss
+  checkIfAttackSurrounded(attack, board) {
+    const [x, y] = [attack.x, attack.y];
+    // searching from top, right, bottom, left of attack
+    const top = { x, y: y - 1 };
+    const right = { x: x + 1, y };
+    const bottom = { x, y: y + 1 };
+    const left = { x: x - 1, y };
+    const sides = [top, right, bottom, left];
+
+    let attackIsSurrounded = true;
+
+    for (let i = 0; i < sides.length; i++) {
+      const [x, y] = [sides[i].x, sides[i].y];
+
+      const square = board.getSquare(x, y);
+      const attack = board.findAttack(x, y);
+      if (square && !attack) {
+        attackIsSurrounded = false;
+      }
+    }
+
+    return attackIsSurrounded;
+  }
 }
