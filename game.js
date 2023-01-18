@@ -6,6 +6,7 @@ import {
   displayBoard,
   makeBoardPlayable,
   makeBoardUnplayable,
+  makeShipMoveable,
 } from './dom.js';
 
 const players = [];
@@ -48,6 +49,8 @@ function startGame() {
   players.forEach((player) => {
     displayBoard(player.board);
   });
+
+  players[0].board.ships.forEach((ship) => makeShipMoveable(ship));
 
   playTurn();
 }

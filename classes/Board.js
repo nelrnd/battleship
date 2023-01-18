@@ -1,4 +1,4 @@
-import { drawAttack, changeShipColor } from '../dom.js';
+import { drawAttack, changeShipColor, positionElem } from '../dom.js';
 import { Ship } from './Ship.js';
 
 export class Board {
@@ -59,6 +59,10 @@ export class Board {
     if (ship.isPlaced) {
       const shipSquares = this.getSquares(ship.pos, ship.dir, ship.length);
       shipSquares.forEach((square) => square.removeShip());
+
+      if (this.elem && ship.elem) {
+        positionElem(ship.elem, pos.x, pos.y, this);
+      }
     }
 
     ship.place(pos, dir);

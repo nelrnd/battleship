@@ -155,10 +155,10 @@ function changeShipColor(elem) {
 HANDLING MOVING AND ROTATING SHIPS
 */
 
+const gridCoords = { prevX: null, prevY: null, newX: null, newY: null };
 let currentBoard = null;
 let currentShip = null;
 let currentShipSquare = null;
-let hasMoved = false;
 
 function makeShipMoveable(ship) {
   ship.elem.addEventListener('mousedown', dragStart);
@@ -211,11 +211,33 @@ function dragStart(event) {
   document.addEventListener('mouseup', dragEnd);
 }
 
+function drag(event) {
+  const ship = currentShip;
+  const square = currentShipSquare;
+  const coords = getGridCoordinates(event, currentBoard);
+  currentShip.dir === 'hor' ? (coords.x -= square) : (coords.y -= square);
+
+  const squares = currentBoard.getSquares(coords, ship.dir, ship.length);
+  if (currentBoard.checkSquaresValidity(squares, ship.length, ship)) {
+    currentBoard.placeShip(currentShip, coords, currentShip.dir);
+  }
+}
+
+function dragEnd() {
+  document.removeEventListener('mousemove', drag);
+  document.removeEventListener('mouseup', dragEnd);
+  currentBoard = null;
+  currentShip = null;
+  currentShipSquare = null;
+}
+
 export {
   createBoardElem,
   displayBoard,
   makeBoardPlayable,
   makeBoardUnplayable,
+  positionElem,
   drawAttack,
   changeShipColor,
+  makeShipMoveable,
 };
