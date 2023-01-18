@@ -81,7 +81,7 @@ export class Board {
     const square = this.getSquare(x, y);
 
     if (this.findAttack(x, y)) throw 'Location already attacked';
-    if (!square) throw 'Invalid location';
+    if (!this.checkAttackValidity(x, y)) throw 'Invalid attack location';
 
     const attack = { x, y };
 

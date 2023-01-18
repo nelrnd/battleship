@@ -11,6 +11,8 @@ export class Player {
     if (board.checkAttackValidity(pos.x, pos.y)) {
       board.receiveAttack(pos.x, pos.y);
       switchTurn();
+    } else {
+      throw 'Invalid attack coords';
     }
   }
 
@@ -62,7 +64,18 @@ export class Player {
             firstHitNotSunkAttack,
             adjacentHitAttack
           );
-          this.play(otherSideAttack, board);
+          if (
+            otherSideAttack &&
+            board.checkAttackValidity(otherSideAttack.x, otherSideAttack.y)
+          ) {
+            this.play(otherSideAttack, board);
+          } else {
+            const nearbyValidAttack = this.findNearbyValidAttack(
+              firstHitNotSunkAttack,
+              board
+            );
+            this.play(nearbyValidAttack, board);
+          }
         }
       } else {
         const nearbyValidAttack = this.findNearbyValidAttack(

@@ -117,3 +117,15 @@ test('Finding attack on the other side of another', () => {
     y: 6,
   });
 });
+
+test('A special case', () => {
+  const player = new Player('human');
+  const opponent = new Player('computer');
+  opponent.board.placeShip(new Ship(4), { x: 0, y: 1 }, 'hor');
+  opponent.board.placeShip(new Ship(3), { x: 0, y: 2 });
+  player.play({ x: 1, y: 1 }, opponent.board);
+  player.play({ x: 1, y: 0 }, opponent.board);
+  player.play({ x: 1, y: 2 }, opponent.board);
+  const pos = player.playSmart(opponent.board);
+  console.log(pos);
+});

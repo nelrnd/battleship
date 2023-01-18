@@ -153,7 +153,7 @@ test('Attacking board multiple times, sunking a ship', () => {
 
 test('Try attacking board at invalid location', () => {
   const board = new Board();
-  expect(() => board.receiveAttack(-3, 12)).toThrow('Invalid location');
+  expect(() => board.receiveAttack(-3, 12)).toThrow('Invalid attack location');
 });
 
 test('Try attacking board at already attacked location', () => {
