@@ -63,7 +63,7 @@ test('Try getting attack that hit a ship but did not sunk it when there is not',
   expect(hitNotSunkAttack).toBe(undefined);
 });
 
-test('Find valid nearby attack', () => {
+test('Finding valid nearby attack', () => {
   const player = new Player('human');
   const opponent = new Player('computer');
 
@@ -90,7 +90,7 @@ test('Finding adjacent hit attack', () => {
   const opponent = new Player('computer');
   opponent.board.placeShip(new Ship(3), { x: 2, y: 2 }, 'hor');
   player.play({ x: 2, y: 2 }, opponent.board);
-  const adjAtck = player.findAdjacentHitAttack({ x: 3, y: 2 }, opponent.board);
+  const adjAtck = player.findAdjHitAttack({ x: 3, y: 2 }, opponent.board);
   expect(adjAtck).toEqual({ x: 2, y: 2 });
 });
 
@@ -98,6 +98,22 @@ test('Try finding adjacent hit attack when there is none', () => {
   const player = new Player('human');
   const opponent = new Player('computer');
   opponent.board.placeShip(new Ship(3), { x: 2, y: 2 }, 'hor');
-  const adjAtck = player.findAdjacentHitAttack({ x: 3, y: 2 }, opponent.board);
+  const adjAtck = player.findAdjHitAttack({ x: 3, y: 2 }, opponent.board);
   expect(adjAtck).toBe(undefined);
+});
+
+test('Finding attack on the other side of another', () => {
+  const player = new Player('human');
+  expect(player.findOtherSideAttack({ x: 3, y: 1 }, { x: 2, y: 1 })).toEqual({
+    x: 4,
+    y: 1,
+  });
+  expect(player.findOtherSideAttack({ x: 2, y: 3 }, { x: 2, y: 2 })).toEqual({
+    x: 2,
+    y: 4,
+  });
+  expect(player.findOtherSideAttack({ x: 3, y: 6 }, { x: 4, y: 6 })).toEqual({
+    x: 2,
+    y: 6,
+  });
 });

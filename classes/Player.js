@@ -31,14 +31,25 @@ export class Player {
   }
 
   playSmart(board) {
+    // check if there is a previous attack that hit a ship but didn't sunk it
     const hitNotSunkAttack = this.findHitNotSunkAttack(board);
-
     if (hitNotSunkAttack) {
-      const nearbyValidAttack = this.findNearbyValidAttack(
-        hitNotSunkAttack,
-        board
-      );
-      this.play(nearbyValidAttack, board);
+      // check if that attack has an adjacent attack that also hit the ship
+      const adjacentHitAttack = this.findAdjHitAttack(hitNotSunkAttack, board);
+      if (adjacentHitAttack) {
+        // get coords from other side of adjacent attack
+        const otherSideAttack = this.getOtherSideAttack(
+          hitNotSunkAttack,
+          adjacentHitAttack
+        );
+        this.play(otherSideAttack, board);
+      } else {
+        const nearbyValidAttack = this.findNearbyValidAttack(
+          hitNotSunkAttack,
+          board
+        );
+        this.play(nearbyValidAttack, board);
+      }
     } else {
       this.playRandom(board);
     }
@@ -77,7 +88,7 @@ export class Player {
     return nearbyValidAttack;
   }
 
-  findAdjacentHitAttack(attack, board) {
+  findAdjHitAttack(attack, board) {
     const [x, y] = [attack.x, attack.y];
     // searching from top, right, bottom, left of attack
     const top = { x, y: y - 1 };
@@ -99,5 +110,19 @@ export class Player {
     }
 
     return adjacentHitAttack;
+  }
+
+  findOtherSideAttack(firstAttack, secondAttack) {
+    if (firstAttack.x > secondAttack.x) {
+      return { x: firstAttack.x + 1, y: firstAttack.y };
+    } else if (firstAttack.x < secondAttack.x) {
+      return { x: firstAttack.x - 1, y: firstAttack.y };
+    } else if (firstAttack.y > secondAttack.y) {
+      return { x: firstAttack.x, y: firstAttack.y + 1 };
+    } else if (firstAttack.y < secondAttack.y) {
+      return { x: firstAttack.x, y: firstAttack.y - 1 };
+    } else {
+      return undefined;
+    }
   }
 }
