@@ -92,7 +92,9 @@ export class Player {
     const right = { x: x + 1, y };
     const bottom = { x, y: y + 1 };
     const left = { x: x - 1, y };
-    const sides = [top, right, bottom, left];
+    const sides = [top, right, bottom, left].sort(
+      (a, b) => 0.5 - Math.random()
+    );
 
     let nearbyValidAttack = undefined;
 
