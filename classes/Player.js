@@ -38,11 +38,32 @@ export class Player {
       const adjacentHitAttack = this.findAdjHitAttack(hitNotSunkAttack, board);
       if (adjacentHitAttack) {
         // get coords from other side of adjacent attack
-        const otherSideAttack = this.getOtherSideAttack(
+        const otherSideAttack = this.findOtherSideAttack(
           hitNotSunkAttack,
           adjacentHitAttack
         );
-        this.play(otherSideAttack, board);
+        if (
+          otherSideAttack &&
+          board.checkAttackValidity(otherSideAttack.x, otherSideAttack.y)
+        ) {
+          this.play(otherSideAttack, board);
+        } else {
+          // go in the other direction
+          const reversedAttacks = [...board.receivedAttacks].reverse();
+          const firstHitNotSunkAttack = this.findHitNotSunkAttack(
+            board,
+            reversedAttacks
+          );
+          const adjacentHitAttack = this.findAdjHitAttack(
+            firstHitNotSunkAttack,
+            board
+          );
+          const otherSideAttack = this.findOtherSideAttack(
+            firstHitNotSunkAttack,
+            adjacentHitAttack
+          );
+          this.play(otherSideAttack, board);
+        }
       } else {
         const nearbyValidAttack = this.findNearbyValidAttack(
           hitNotSunkAttack,
@@ -55,8 +76,8 @@ export class Player {
     }
   }
 
-  findHitNotSunkAttack(board) {
-    const attacks = board.receivedAttacks;
+  findHitNotSunkAttack(board, attacks) {
+    attacks = attacks || board.receivedAttacks;
     return attacks.find(
       (attack) =>
         board.getSquare(attack.x, attack.y).ship &&
@@ -102,8 +123,9 @@ export class Player {
     for (let i = 0; i < sides.length; i++) {
       const [x, y] = [sides[i].x, sides[i].y];
 
-      const adjacentExist = board.findAttack(x, y);
-      if (adjacentExist) {
+      const attack = board.findAttack(x, y);
+      const square = board.getSquare(x, y);
+      if (attack && square && square.ship && !square.ship.isSunk) {
         adjacentHitAttack = sides[i];
         break;
       }
