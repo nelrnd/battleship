@@ -1,6 +1,6 @@
 :root {
   --grid-size: 10;
-  --grid-dim: 600px;
+  --grid-dim: 350px;
   --square-dim: calc(var(--grid-dim) / var(--grid-size));
 }
 

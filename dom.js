@@ -100,8 +100,15 @@ function positionElem(elem, x, y, board) {
 function getGridCoordinates(event, board) {
   const rect = board.elem.querySelector('.grid').getBoundingClientRect();
   const gridSize = Math.sqrt(board.grid.length);
-  const pointerFromLeft = event.clientX - rect.left;
-  const pointerFromTop = event.clientY - rect.top;
+  let pointerFromLeft;
+  let pointerFromTop;
+  if (event.type === 'touchmove') {
+    pointerFromLeft = event.touches[0].clientX - rect.left;
+    pointerFromTop = event.touches[0].clientY - rect.top;
+  } else {
+    pointerFromLeft = event.clientX - rect.left;
+    pointerFromTop = event.clientY - rect.top;
+  }
   const x = Math.floor((pointerFromLeft * gridSize) / rect.width);
   const y = Math.floor((pointerFromTop * gridSize) / rect.height);
 
@@ -161,11 +168,13 @@ let currentShipSquare = null;
 
 function makeShipMoveable(ship) {
   ship.elem.addEventListener('mousedown', dragStart);
+  ship.elem.addEventListener('touchstart', dragStart);
   ship.elem.addEventListener('dblclick', rotate);
 }
 
 function makeShipUnmoveable(ship) {
   ship.elem.removeEventListener('mousedown', dragStart);
+  ship.elem.removeEventListener('touchstart', dragStart);
   ship.elem.removeEventListener('dblclick', rotate);
 }
 
@@ -188,8 +197,15 @@ function getCurrentShip(event) {
 function getCurrentShipSquare(event) {
   const ship = currentShip;
   const rect = ship.elem.getBoundingClientRect();
-  const pointerFromLeft = event.clientX - rect.left;
-  const pointerFromTop = event.clientY - rect.top;
+  let pointerFromLeft;
+  let pointerFromTop;
+  if (event.type === 'touchstart') {
+    pointerFromLeft = event.touches[0].clientX - rect.left;
+    pointerFromTop = event.touches[0].clientY - rect.top;
+  } else {
+    pointerFromLeft = event.clientX - rect.left;
+    pointerFromTop = event.clientY - rect.top;
+  }
   if (ship.dir === 'hor') {
     const square = Math.floor((pointerFromLeft * ship.length) / rect.width);
     return square;
@@ -210,11 +226,13 @@ function dragStart(event) {
   getCurrents(event);
 
   document.addEventListener('mousemove', drag);
+  document.addEventListener('touchmove', drag);
+
   document.addEventListener('mouseup', dragEnd);
+  document.addEventListener('touchend', dragEnd);
 }
 
 function drag(event) {
-  event.preventDefault();
   const ship = currentShip;
   const square = currentShipSquare;
   const coords = getGridCoordinates(event, currentBoard);
@@ -228,7 +246,9 @@ function drag(event) {
 
 function dragEnd() {
   document.removeEventListener('mousemove', drag);
+  document.removeEventListener('touchmove', drag);
   document.removeEventListener('mouseup', dragEnd);
+  document.removeEventListener('touchend', dragEnd);
   currentBoard = null;
   currentShip = null;
   currentShipSquare = null;
@@ -246,6 +266,9 @@ function rotate(event) {
     currentShip.elem.classList.remove('ver');
     currentShip.elem.classList.add('hor');
   }
+  currentBoard = null;
+  currentShip = null;
+  currentShipSquare = null;
 }
 
 export {
