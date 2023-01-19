@@ -73,7 +73,7 @@ export class Board {
 
     if (!ship.elem && this.elem) {
       createShipElem(ship);
-      this.elem.appendChild(ship.elem);
+      this.elem.querySelector('.ships').appendChild(ship.elem);
     }
 
     if (this.elem && ship.elem) {
