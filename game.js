@@ -4,6 +4,7 @@ import { Player } from './classes/Player.js';
 import {
   createBoardElem,
   displayBoards,
+  displayGameOver,
   displayPositionShips,
   makeBoardPlayable,
   makeBoardUnplayable,
@@ -58,7 +59,7 @@ function playTurn() {
   let opponent = getOpponent();
 
   if (current.board.allShipsSunked) {
-    endGame(opponent);
+    endGame(opponent, current);
     return;
   }
 
@@ -72,11 +73,15 @@ function playTurn() {
   }
 }
 
-function endGame(winner) {
+export function endGame(winner, looser) {
   players.forEach((player) => {
     makeBoardUnplayable(player.board);
   });
-  alert(`Game over! Winner is ${winner.type}`);
+
+  winner = winner.type === 'human' ? 'You' : 'Computer';
+  const nbOfMoves = looser.board.receivedAttacks.length;
+
+  displayGameOver(winner, nbOfMoves);
 }
 
 export { players, switchTurn, createPlayers, setupGame, startGame };

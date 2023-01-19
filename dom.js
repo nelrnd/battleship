@@ -1,4 +1,4 @@
-import { players, startGame } from './game.js';
+import { players, setupGame, startGame } from './game.js';
 
 const main = document.querySelector('main');
 
@@ -365,6 +365,24 @@ function displayBoards(players) {
   });
 }
 
+function displayGameOver(winner, nbOfMoves) {
+  const modalWrapper = document.createElement('div');
+  const modal = document.createElement('div');
+  const text = document.createElement('p');
+  const btn = createBtnElem('Play again', setupGame);
+
+  modalWrapper.className = 'modal-wrapper';
+  modal.className = 'modal';
+
+  text.textContent = `${winner} won in ${nbOfMoves} moves!`;
+
+  modal.appendChild(text);
+  modal.appendChild(btn);
+  modalWrapper.appendChild(modal);
+
+  displayElem(modalWrapper);
+}
+
 export {
   createBoardElem,
   createShipElem,
@@ -376,4 +394,5 @@ export {
   changeShipColor,
   displayPositionShips,
   displayBoards,
+  displayGameOver,
 };
