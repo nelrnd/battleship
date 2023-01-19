@@ -3,6 +3,7 @@ import {
   changeShipColor,
   positionElem,
   removeShipElems,
+  createShipElem,
 } from '../dom.js';
 import { Ship } from './Ship.js';
 
@@ -66,19 +67,29 @@ export class Board {
       shipSquares.forEach((square) => square.removeShip());
     }
 
+    ship.place(pos, dir);
+    squares.forEach((square) => (square.ship = ship));
+
+    if (!this.ships.includes(ship)) this.ships.push(ship);
+
+    if (!ship.elem && this.elem) {
+      createShipElem(ship);
+      this.elem.appendChild(ship.elem);
+    }
+
     if (this.elem && ship.elem) {
       positionElem(ship.elem, pos.x, pos.y, this);
     }
-
-    ship.place(pos, dir);
-    squares.forEach((square) => (square.ship = ship));
-    if (!this.ships.includes(ship)) this.ships.push(ship);
   }
 
-  removeShip(ship) {
-    const squares = this.getSquares(ship.pos, ship.dir, ship.length);
-    squares.forEach((square) => square.removeShip());
-    ship.remove();
+  removeShips() {
+    this.ships.forEach((ship) => {
+      const squares = this.getSquares(ship.pos, ship.dir, ship.length);
+      squares.forEach((square) => square.removeShip());
+      ship.remove();
+      if (ship.elem) ship.elem.remove();
+    });
+    this.ships.length = 0;
   }
 
   rotateShip(ship) {
@@ -124,8 +135,7 @@ export class Board {
   }
 
   populateRandomly() {
-    removeShipElems(this.ships);
-    this.ships.length = 0;
+    this.removeShips();
     const shipLengths = [5, 4, 3, 3, 2];
     const gridSize = Math.sqrt(this.grid.length);
 
@@ -146,8 +156,6 @@ export class Board {
         }
       }
     }
-
-    console.log(this.ships);
   }
 }
 

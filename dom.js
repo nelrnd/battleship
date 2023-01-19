@@ -183,6 +183,14 @@ function makeShipUnmoveable(ship) {
   ship.elem.removeEventListener('touchstart', dragStart);
 }
 
+function makeShipsMoveable(ships) {
+  ships.forEach((ship) => makeShipMoveable(ship));
+}
+
+function makeShipsUnmoveable(ships) {
+  ships.forEach((ship) => makeShipUnmoveable(ship));
+}
+
 function getCurrentBoard(event) {
   let elem = event.target;
   while (!elem.classList.contains('board')) {
@@ -314,7 +322,7 @@ function createInfoElem(text) {
 }
 
 // position ships screen
-function drawPositionShips(player) {
+function displayPositionShips(player) {
   clearMain();
   const col1 = document.createElement('div');
   const col2 = document.createElement('div');
@@ -334,11 +342,12 @@ function drawPositionShips(player) {
   col1.appendChild(infos);
 
   const btn1 = createBtnElem('Start Game', startGame);
-  //const btn2Func = player.board.populateRandomly.bind(player.board);
-  const btn2 = createBtnElem(
-    'Randomize Ships',
-    player.board.populateRandomly.bind(player.board)
-  );
+  const btn2 = createBtnElem('Randomize Ships', btn2Func);
+
+  function btn2Func() {
+    player.board.populateRandomly();
+    makeShipsMoveable(player.board.ships);
+  }
 
   col2.appendChild(btn1);
   col2.appendChild(btn2);
@@ -346,11 +355,11 @@ function drawPositionShips(player) {
   main.appendChild(col1);
   main.appendChild(col2);
 
-  // position ship elems
   player.board.ships.forEach((ship) => {
     positionElem(ship.elem, ship.pos.x, ship.pos.y, player.board);
-    makeShipMoveable(ship);
   });
+
+  makeShipsMoveable(player.board.ships);
 }
 
 export {
@@ -362,7 +371,6 @@ export {
   positionElem,
   drawAttack,
   changeShipColor,
-  makeShipMoveable,
-  drawPositionShips,
+  displayPositionShips,
   removeShipElems,
 };

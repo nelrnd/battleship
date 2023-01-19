@@ -88,17 +88,6 @@ test('Try placing ship on top of another', () => {
   );
 });
 
-test('Removing a ship after having placing it', () => {
-  const board = new Board();
-  const ship = new Ship();
-  board.placeShip(ship, { x: 3, y: 4 }, 'hor');
-
-  board.removeShip(ship);
-  expect(ship.isPlaced).toBe(false);
-  expect(board.getSquare(3, 4).ship).toBe(null);
-  expect(board.getSquare(5, 4).ship).toBe(null);
-});
-
 test('Rotating a placed ship', () => {
   const board = new Board();
   const ship = new Ship();

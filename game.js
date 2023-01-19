@@ -3,11 +3,9 @@
 import { Player } from './classes/Player.js';
 import {
   createBoardElem,
-  displayBoard,
-  drawPositionShips,
+  displayPositionShips,
   makeBoardPlayable,
   makeBoardUnplayable,
-  makeShipMoveable,
 } from './dom.js';
 
 const players = [];
@@ -36,14 +34,16 @@ function createPlayers() {
 
 function setupGame() {
   players.forEach((player) => {
-    player.board.populateRandomly();
     createBoardElem(player.board);
+    player.board.populateRandomly();
     if (player.type === 'computer') {
       player.board.elem.classList.add('opponent');
     }
   });
 
-  drawPositionShips(players[0]);
+  displayPositionShips(players[0]);
+
+  console.log(players[0].board.ships);
 }
 
 function startGame() {
