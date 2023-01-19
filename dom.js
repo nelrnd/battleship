@@ -298,12 +298,17 @@ function createBtnElem(text, func, optClass) {
 
 function createInfoElem(text) {
   const infoElem = document.createElement('div');
+  const iconElem = document.createElement('img');
   infoElem.textContent = text;
   infoElem.className = 'info';
+  iconElem.src = './assets/info-icon.svg';
+  iconElem.alt = 'information icon';
+  infoElem.prepend(iconElem);
   return infoElem;
 }
 
 displayElem(createBtnElem('Start Game'));
+displayElem(createInfoElem('Click and drag a ship to move it'));
 
 export {
   createBoardElem,
