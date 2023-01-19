@@ -283,6 +283,19 @@ function rotate(event) {
   }
 }
 
+/*
+HANDLING DIFFERENT SCREENS OF THE GAME
+*/
+
+function createBtnElem(text, func, optClass) {
+  const btnElem = document.createElement('button');
+  btnElem.textContent = text;
+  btnElem.className = 'btn';
+  if (optClass) btnElem.classList.add(optClass);
+  btnElem.onclick = func;
+  return btnElem;
+}
+
 export {
   createBoardElem,
   displayBoard,
