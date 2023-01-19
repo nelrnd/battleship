@@ -296,6 +296,13 @@ function createBtnElem(text, func, optClass) {
   return btnElem;
 }
 
+function createInfoElem(text) {
+  const infoElem = document.createElement('div');
+  infoElem.textContent = text;
+  infoElem.className = 'info';
+  return infoElem;
+}
+
 displayElem(createBtnElem('Start Game'));
 
 export {

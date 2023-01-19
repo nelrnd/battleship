@@ -147,7 +147,7 @@ main {
   text-transform: uppercase;
   background-color: var(--main);
   border: solid 3px var(--main-darker);
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   position: relative;
   top: 0px;
