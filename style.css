@@ -63,11 +63,11 @@ h1 {
   font-size: 2.5rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.08rem;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-bottom: 1.5rem;
   width: fit-content;
 }
@@ -76,7 +76,21 @@ h2 {
   width: var(--grid-dim);
   height: var(--grid-dim);
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
+}
+
+/* Naming board */
+.board::after {
+  display: block;
+  margin-top: 6px;
+  font-weight: 400;
+  text-align: center;
+}
+.board.opponent::after {
+  content: 'Computer board';
+}
+.board.player::after {
+  content: 'Your board';
 }
 
 .grid {
@@ -208,7 +222,7 @@ h2 {
 }
 
 .info {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--dark);
   background-color: var(--grey);
   padding: 8px 12px;
@@ -265,5 +279,17 @@ h2 {
   main {
     flex-direction: column;
     gap: 2rem;
+  }
+  .board {
+    margin-bottom: 1.7rem;
+  }
+  .board::after {
+    transform: rotate(-90deg);
+    position: absolute;
+    width: 100%;
+    right: 100%;
+    left: -26px;
+    top: 0px;
+    bottom: 0px;
   }
 }

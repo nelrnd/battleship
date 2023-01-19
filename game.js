@@ -36,7 +36,7 @@ function createPlayers() {
 
 function setupGame() {
   players.forEach((player) => {
-    createBoardElem(player.board);
+    createBoardElem(player.board, player.type);
     player.board.populateRandomly();
     if (player.type === 'computer') {
       player.board.elem.classList.add('opponent');

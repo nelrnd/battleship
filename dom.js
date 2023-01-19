@@ -19,13 +19,18 @@ function clearMain() {
   main.innerHTML = null;
 }
 
-function createBoardElem(board) {
+function createBoardElem(board, playerType) {
   const boardElem = document.createElement('div');
   const gridElem = createBoardGridElem(board.grid);
   const shipsElem = createBoardShipsElem(board.ships);
   const attacksElem = createBoardAttacksElem();
 
   boardElem.className = 'board';
+  if (playerType === 'computer') {
+    boardElem.classList.add('opponent');
+  } else {
+    boardElem.classList.add('player');
+  }
   boardElem.appendChild(attacksElem);
   boardElem.appendChild(shipsElem);
   boardElem.appendChild(gridElem);
