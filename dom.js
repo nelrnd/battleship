@@ -82,12 +82,6 @@ function createShipElem(ship) {
   return shipElem;
 }
 
-function removeShipElems(ships) {
-  ships.forEach((ship) => {
-    if (ship.elem) ship.elem.remove();
-  });
-}
-
 function getPositionFromXY(x, y, board) {
   const gridWidth = board.elem.offsetWidth;
   const gridSize = Math.sqrt(board.grid.length);
@@ -362,6 +356,15 @@ function displayPositionShips(player) {
   makeShipsMoveable(player.board.ships);
 }
 
+function displayBoards(players) {
+  clearMain();
+
+  players.forEach((player) => {
+    displayBoard(player.board);
+    makeShipsUnmoveable(player.board.ships);
+  });
+}
+
 export {
   createBoardElem,
   createShipElem,
@@ -372,5 +375,5 @@ export {
   drawAttack,
   changeShipColor,
   displayPositionShips,
-  removeShipElems,
+  displayBoards,
 };

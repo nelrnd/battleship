@@ -2,7 +2,6 @@ import {
   drawAttack,
   changeShipColor,
   positionElem,
-  removeShipElems,
   createShipElem,
 } from '../dom.js';
 import { Ship } from './Ship.js';

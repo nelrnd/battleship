@@ -100,7 +100,7 @@ h2 {
   background-color: var(--main);
 }
 .ship.sunk .square {
-  background-color: black;
+  background-color: var(--main-darker);
 }
 
 .attacks {

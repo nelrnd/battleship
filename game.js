@@ -3,6 +3,7 @@
 import { Player } from './classes/Player.js';
 import {
   createBoardElem,
+  displayBoards,
   displayPositionShips,
   makeBoardPlayable,
   makeBoardUnplayable,
@@ -42,14 +43,12 @@ function setupGame() {
   });
 
   displayPositionShips(players[0]);
-
-  console.log(players[0].board.ships);
 }
 
 function startGame() {
   turn = 0;
 
-  console.log('ok!');
+  displayBoards(players);
 
   playTurn();
 }
