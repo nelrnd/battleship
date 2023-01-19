@@ -138,6 +138,10 @@ function drawAttack(attack, board) {
   const markElem = createMarkElem(hit);
   board.elem.querySelector('.attacks').appendChild(markElem);
   positionElem(markElem, attack.x, attack.y, board);
+
+  setTimeout(() => {
+    square.elem.classList.add('shot');
+  }, 200);
 }
 
 function createMarkElem(hit) {

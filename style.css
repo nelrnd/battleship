@@ -109,6 +109,14 @@ h2 {
   border: solid 0.5px black;
 }
 
+/* Changing cursor depending on square type */
+.board.opponent .square:hover {
+  cursor: crosshair;
+}
+.board.opponent .square.shot:hover {
+  cursor: not-allowed;
+}
+
 .ships,
 .attacks {
   position: absolute;
@@ -116,6 +124,7 @@ h2 {
   left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 
 .ship {
@@ -142,7 +151,6 @@ h2 {
 
 .attacks {
   z-index: 5;
-  pointer-events: none;
 }
 
 .mark {
