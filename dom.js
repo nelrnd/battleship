@@ -1,4 +1,4 @@
-import { players } from './game.js';
+import { players, startGame } from './game.js';
 
 const main = document.querySelector('main');
 
@@ -80,6 +80,12 @@ function createShipElem(ship) {
 
   ship.elem = shipElem;
   return shipElem;
+}
+
+function removeShipElems(ships) {
+  ships.forEach((ship) => {
+    if (ship.elem) ship.elem.remove();
+  });
 }
 
 function getPositionFromXY(x, y, board) {
@@ -307,11 +313,49 @@ function createInfoElem(text) {
   return infoElem;
 }
 
-displayElem(createBtnElem('Start Game'));
-displayElem(createInfoElem('Click and drag a ship to move it'));
+// position ships screen
+function drawPositionShips(player) {
+  clearMain();
+  const col1 = document.createElement('div');
+  const col2 = document.createElement('div');
+
+  const heading = document.createElement('h2');
+  heading.textContent = 'Position your ships:';
+
+  const infos = document.createElement('div');
+  infos.className = 'infos';
+  const info1 = createInfoElem('Click and drag a ship to move it');
+  const info2 = createInfoElem('Click once on a ship to rotate it');
+  infos.appendChild(info1);
+  infos.appendChild(info2);
+
+  col1.appendChild(heading);
+  col1.appendChild(player.board.elem);
+  col1.appendChild(infos);
+
+  const btn1 = createBtnElem('Start Game', startGame);
+  //const btn2Func = player.board.populateRandomly.bind(player.board);
+  const btn2 = createBtnElem(
+    'Randomize Ships',
+    player.board.populateRandomly.bind(player.board)
+  );
+
+  col2.appendChild(btn1);
+  col2.appendChild(btn2);
+
+  main.appendChild(col1);
+  main.appendChild(col2);
+
+  // position ship elems
+  player.board.ships.forEach((ship) => {
+    positionElem(ship.elem, ship.pos.x, ship.pos.y, player.board);
+    makeShipMoveable(ship);
+  });
+}
 
 export {
   createBoardElem,
+  createShipElem,
   displayBoard,
   makeBoardPlayable,
   makeBoardUnplayable,
@@ -319,4 +363,6 @@ export {
   drawAttack,
   changeShipColor,
   makeShipMoveable,
+  drawPositionShips,
+  removeShipElems,
 };

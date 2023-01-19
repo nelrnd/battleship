@@ -4,6 +4,7 @@ import { Player } from './classes/Player.js';
 import {
   createBoardElem,
   displayBoard,
+  drawPositionShips,
   makeBoardPlayable,
   makeBoardUnplayable,
   makeShipMoveable,
@@ -41,16 +42,14 @@ function setupGame() {
       player.board.elem.classList.add('opponent');
     }
   });
+
+  drawPositionShips(players[0]);
 }
 
 function startGame() {
   turn = 0;
 
-  players.forEach((player) => {
-    displayBoard(player.board);
-  });
-
-  players[0].board.ships.forEach((ship) => makeShipMoveable(ship));
+  console.log('ok!');
 
   playTurn();
 }
