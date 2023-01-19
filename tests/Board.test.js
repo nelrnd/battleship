@@ -222,3 +222,15 @@ test('Checking if all ships are sunk when all ships are sunk', () => {
 
   expect(board.allShipsSunked).toBe(true);
 });
+
+test('Clearing a board', () => {
+  const board = new Board();
+  board.placeShip(new Ship(3), { x: 2, y: 2 }, 'hor');
+  board.receiveAttack(6, 6);
+
+  board.clear();
+  expect(board.receivedAttacks.length).toBe(0);
+  expect(board.ships.length).toBe(0);
+  expect(board.getSquare(2, 2).ship).toBe(null);
+  expect(board.getSquare(6, 6).shot).toBe(false);
+});

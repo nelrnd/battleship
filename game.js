@@ -73,7 +73,7 @@ function playTurn() {
   }
 }
 
-export function endGame(winner, looser) {
+function endGame(winner, looser) {
   players.forEach((player) => {
     makeBoardUnplayable(player.board);
   });

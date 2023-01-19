@@ -156,6 +156,14 @@ export class Board {
       }
     }
   }
+
+  clear() {
+    this.grid.forEach((square) => {
+      if (square.shot) square.shot = false;
+    });
+    this.removeShips();
+    this.receivedAttacks.length = 0;
+  }
 }
 
 // Grid square
@@ -164,6 +172,7 @@ class Square {
     this.x = x;
     this.y = y;
     this.ship = null;
+    this.shot = false;
   }
 
   get hasShip() {
