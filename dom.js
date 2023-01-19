@@ -296,6 +296,8 @@ function createBtnElem(text, func, optClass) {
   return btnElem;
 }
 
+displayElem(createBtnElem('Start Game'));
+
 export {
   createBoardElem,
   displayBoard,
