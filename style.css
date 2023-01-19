@@ -1,6 +1,6 @@
 :root {
   --grid-size: 10;
-  --grid-dim: 500px;
+  --grid-dim: min(500px, 40vw);
   --square-dim: calc(var(--grid-dim) / var(--grid-size));
 
   --main: rgb(60, 60, 202);
@@ -24,7 +24,7 @@ body {
 
 body {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
 }
 
 header {
@@ -33,11 +33,27 @@ header {
   background-color: var(--grey);
 }
 
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--grey);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+footer a {
+  color: var(--main-darker);
+}
+
 main {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 60px;
+  padding: 1rem;
 }
 
 h1 {
@@ -47,6 +63,7 @@ h1 {
 h2 {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
+  width: fit-content;
 }
 
 .board {
@@ -173,6 +190,8 @@ h2 {
 .infos {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
+  max-width: var(--grid-dim);
 }
 
 .info {
@@ -215,4 +234,23 @@ h2 {
   font-weight: 700;
   text-align: center;
   padding-bottom: 2rem;
+}
+
+@media screen and (max-width: 750px) {
+  :root {
+    --grid-dim: min(90vw, 400px);
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+  header {
+    padding: 1.5rem;
+  }
+  main {
+    flex-direction: column;
+    gap: 2rem;
+  }
 }
