@@ -41,6 +41,7 @@ function setupGame() {
     if (player.type === 'computer') {
       player.board.elem.classList.add('opponent');
     }
+    player.board.clearAttacks();
   });
 
   displayPositionShips(players[0]);

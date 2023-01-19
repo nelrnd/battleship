@@ -157,11 +157,10 @@ export class Board {
     }
   }
 
-  clear() {
+  clearAttacks() {
     this.grid.forEach((square) => {
       if (square.shot) square.shot = false;
     });
-    this.removeShips();
     this.receivedAttacks.length = 0;
   }
 }
