@@ -82,7 +82,9 @@ function endGame(winner, looser) {
   winner = winner.type === 'human' ? 'You' : 'Computer';
   const nbOfMoves = looser.board.receivedAttacks.length;
 
-  displayGameOver(winner, nbOfMoves);
+  setTimeout(() => {
+    displayGameOver(winner, nbOfMoves);
+  }, 500);
 }
 
 export { players, switchTurn, createPlayers, setupGame, startGame };
