@@ -49,6 +49,7 @@ footer {
 
 footer a {
   color: var(--main-darker);
+  text-decoration: none;
 }
 
 main {
