@@ -113,18 +113,17 @@ h2 {
 /* Changing square styling on hover */
 .board .square:hover {
   box-shadow: var(--square-dim) 5px 0px rgba(0, 0, 0, 0.1) inset;
-  z-index: 2;
 }
 .board.opponent .square:hover {
   cursor: crosshair;
   border-width: 3px;
 }
-.board.opponent .square.shot:hover {
+.board.opponent .square.shot:hover,
+.board.opponent .ships .square:hover {
   cursor: not-allowed;
   border-width: 0.5px;
 }
 
-.ships,
 .attacks {
   position: absolute;
   top: 0;
