@@ -53,9 +53,12 @@ footer a {
 }
 
 main {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  align-content: center;
   align-items: center;
+  justify-content: center;
   gap: 60px;
   padding: 1rem;
 }
