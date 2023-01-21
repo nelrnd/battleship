@@ -236,6 +236,7 @@ h2 {
   gap: 1rem;
   flex-wrap: wrap;
   max-width: var(--grid-dim);
+  margin-bottom: 1rem;
 }
 
 .info {
@@ -294,8 +295,8 @@ h2 {
     padding: 1.5rem;
   }
   main {
-    flex-direction: column;
-    gap: 2rem;
+    grid-template-columns: auto;
+    gap: 1vh;
   }
   .board {
     margin-bottom: 1.7rem;
@@ -308,5 +309,8 @@ h2 {
     left: -26px;
     top: 0px;
     bottom: 0px;
+  }
+  .btn {
+    font-size: 16px;
   }
 }
