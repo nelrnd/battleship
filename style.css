@@ -89,6 +89,7 @@ h2 {
   margin-top: 6px;
   font-weight: 400;
   text-align: center;
+  pointer-events: none;
 }
 .board.opponent::after {
   content: 'Computer board';
