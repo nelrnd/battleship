@@ -24,7 +24,10 @@ export class Player {
       let x = Math.floor(Math.random() * gridSize);
       let y = Math.floor(Math.random() * gridSize);
 
-      if (board.checkAttackValidity(x, y)) {
+      // check for parity
+      let parited = (!(x % 2) && !(y % 2)) || (x % 2 && y % 2) ? true : false;
+
+      if (board.checkAttackValidity(x, y) && parited) {
         board.receiveAttack(x, y);
         played = true;
         switchTurn();
