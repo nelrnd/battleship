@@ -298,7 +298,7 @@ function rotate(event) {
         currentShip.elem.classList.add('hor');
       }
     } catch (error) {
-      addTempClass(currentShip.elem, 'invalid', 1000);
+      addTempClass(currentShip.elem, 'invalid', 700);
     }
 
     resetCurrents();
