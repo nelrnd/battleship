@@ -287,17 +287,27 @@ function rotate(event) {
   if (hasMoved === false) {
     event.preventDefault();
     getCurrents(event);
-    currentBoard.rotateShip(currentShip);
-    // update ship elem class
-    if (currentShip.elem.classList.contains('hor')) {
-      currentShip.elem.classList.remove('hor');
-      currentShip.elem.classList.add('ver');
-    } else if (currentShip.elem.classList.contains('ver')) {
-      currentShip.elem.classList.remove('ver');
-      currentShip.elem.classList.add('hor');
+    try {
+      currentBoard.rotateShip(currentShip);
+      // update ship elem class
+      if (currentShip.elem.classList.contains('hor')) {
+        currentShip.elem.classList.remove('hor');
+        currentShip.elem.classList.add('ver');
+      } else if (currentShip.elem.classList.contains('ver')) {
+        currentShip.elem.classList.remove('ver');
+        currentShip.elem.classList.add('hor');
+      }
+    } catch (error) {
+      addTempClass(currentShip.elem, 'invalid', 1000);
     }
+
     resetCurrents();
   }
+}
+
+function addTempClass(elem, className, duration) {
+  elem.classList.add(className);
+  setTimeout(() => elem.classList.remove(className), duration);
 }
 
 /*

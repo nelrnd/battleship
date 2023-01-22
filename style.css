@@ -142,6 +142,7 @@ h2 {
   position: absolute;
   outline: 0.5px solid black;
   display: flex;
+  background-color: var(--main);
 }
 .ship.ver {
   width: var(--square-dim);
@@ -153,10 +154,7 @@ h2 {
   width: fit-content;
   flex-direction: row;
 }
-.ship .square {
-  background-color: var(--main);
-}
-.ship.sunk .square {
+.ship.sunk {
   background-color: var(--main-darker);
 }
 
@@ -350,7 +348,7 @@ h2 {
   }
   15% {
     transform: translateX(-5px);
-    background-color: red;
+    background-color: var(--red);
   }
   30% {
     transform: translateX(5px);
@@ -363,7 +361,7 @@ h2 {
   }
   75% {
     transform: translateX(-5px);
-    background-color: red;
+    background-color: var(--red);
   }
   100% {
     transform: translateX(0px);
@@ -372,5 +370,6 @@ h2 {
 
 .invalid {
   animation-name: invalid-animation;
-  animation-duration: 1s;
+  animation-duration: 0.7s;
+  animation-timing-function: ease-in-out;
 }
