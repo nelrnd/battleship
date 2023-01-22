@@ -6,8 +6,10 @@ import {
   displayBoards,
   displayGameOver,
   displayPositionShips,
+  displayTurnInfo,
   makeBoardPlayable,
   makeBoardUnplayable,
+  setTurnInfo,
 } from './dom.js';
 
 const players = [];
@@ -51,6 +53,7 @@ function startGame() {
   turn = 0;
 
   displayBoards(players);
+  displayTurnInfo();
 
   playTurn();
 }
@@ -63,6 +66,8 @@ function playTurn() {
     endGame(opponent, current);
     return;
   }
+
+  setTurnInfo(current.type);
 
   if (current.type === 'human') {
     makeBoardPlayable(current, opponent.board);

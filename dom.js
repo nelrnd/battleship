@@ -327,6 +327,7 @@ function createInfoElem(text) {
 // position ships screen
 function displayPositionShips(player) {
   clearMain();
+  main.className = 'placing';
   const col1 = document.createElement('div');
   const col2 = document.createElement('div');
 
@@ -367,6 +368,7 @@ function displayPositionShips(player) {
 
 function displayBoards(players) {
   clearMain();
+  main.className = 'playing';
 
   players.forEach((player) => {
     displayBoard(player.board);
@@ -392,6 +394,25 @@ function displayGameOver(winner, nbOfMoves) {
   displayElem(modalWrapper);
 }
 
+/* Turn info */
+
+function createTurnInfoElem() {
+  const infoElem = document.createElement('div');
+  infoElem.id = 'turn-info';
+  infoElem.textContent = 'This is your turn to play';
+  return infoElem;
+}
+
+function displayTurnInfo() {
+  const infoElem = createTurnInfoElem();
+  main.prepend(infoElem);
+}
+
+function setTurnInfo(playerType) {
+  const infoElem = document.getElementById('turn-info');
+  infoElem.textContent = `${playerType == 'human' ? 'You' : 'Computer'} turn`;
+}
+
 export {
   createBoardElem,
   createShipElem,
@@ -404,4 +425,6 @@ export {
   displayPositionShips,
   displayBoards,
   displayGameOver,
+  displayTurnInfo,
+  setTurnInfo,
 };
