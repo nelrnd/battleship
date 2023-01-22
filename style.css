@@ -343,3 +343,34 @@ h2 {
     grid-column: 1 / span 1;
   }
 }
+
+@keyframes invalid-animation {
+  0% {
+    transform: translateX(0px);
+  }
+  15% {
+    transform: translateX(-5px);
+    background-color: red;
+  }
+  30% {
+    transform: translateX(5px);
+  }
+  45% {
+    transform: translateX(-5px);
+  }
+  60% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+    background-color: red;
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.invalid {
+  animation-name: invalid-animation;
+  animation-duration: 1s;
+}
